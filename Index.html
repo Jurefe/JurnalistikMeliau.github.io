@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Jurnalistik SMAN 1 Meliau | Portfolio</title>
+    
+    <link rel="preconnect" href="https://images.unsplash.com">
+    
+    <style>
+        :root {
+            /* Light Mode Variables */
+            --bg-color: #f4f4f0;
+            --text-color: #111111;
+            --accent-color: #d90429;
+            --border-color: #111111;
+            --card-bg: #ffffff;
+            --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-accent: 'Courier New', Courier, monospace;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Mode Variables */
+            --bg-color: #121212;
+            --text-color: #fdfdfd;
+            --accent-color: #ef233c;
+            --border-color: #fdfdfd;
+            --card-bg: #1a1a1a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.6;
+            
+            /* OPTIMASI: Mencegah layot bergeser ke samping (horizontal scroll) di mobile */
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            border-bottom: 3px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-color);
+            z-index: 1000;
+        }
+
+        .logo img {
+            max-height: 50px;
+            width: auto;
+            vertical-align: middle;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            /* OPTIMASI: Rendering dengan GPU untuk mencegah lag */
+            transform: translateZ(0); 
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: color 0.2s ease;
+        }
+
+        .controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .controls button {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.4rem 0.8rem;
+            cursor: pointer;
+            font-family: var(--font-accent);
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        /* Custom Blog Button */
+        .blog-btn {
+            background-color: var(--accent-color);
+            color: #ffffff !important;
+            padding: 0.4rem 1.2rem;
+            text-decoration: none;
+            font-family: var(--font-accent);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            border: 2px solid var(--border-color);
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        /* OPTIMASI: Memisahkan efek hover hanya untuk perangkat yang memiliki Mouse/Trackpad.
+           Mencegah bug "sticky hover" pada layar sentuh. */
+        @media (hover: hover) and (pointer: fine) {
+            .logo img:hover {
+                transform: scale(1.05) translateZ(0);
+            }
+            nav a:hover {
+                color: var(--accent-color);
+            }
+            .controls button:hover {
+                background: var(--text-color);
+                color: var(--bg-color);
+            }
+            .blog-btn:hover {
+                background-color: var(--text-color);
+                color: var(--bg-color) !important;
+                box-shadow: 4px 4px 0px var(--accent-color);
+                transform: translate(-2px, -2px);
+            }
+            .value-card:hover, .project-card:hover {
+                transform: translate(-4px, -4px);
+            }
+            .value-card:hover {
+                box-shadow: 12px 12px 0px var(--accent-color);
+            }
+            .project-card:hover {
+                box-shadow: 12px 12px 0px var(--border-color);
+            }
+            .article-card:hover {
+                background: var(--text-color);
+                color: var(--bg-color);
+            }
+            .article-card:hover .article-tag, .article-card:hover p {
+                color: var(--bg-color);
+            }
+            .project-card:hover .article-tag, .project-card:hover p {
+                color: #ffffff !important;
+            }
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 6rem 5%;
+            border-bottom: 3px solid var(--border-color);
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem); /* OPTIMASI: Tipografi responsif otomatis */
+            font-weight: 900;
+            line-height: 1.1;
+            text-transform: uppercase;
+            max-width: 900px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero .highlight {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            padding: 0 10px;
+        }
+
+        .hero p.manifesto {
+            font-family: var(--font-accent);
+            font-size: 1.2rem;
+            max-width: 600px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* --- SECTION TITLES --- */
+        .section-title {
+            font-family: var(--font-accent);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            border-bottom: 2px dashed var(--border-color);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        section {
+            padding: 4rem 5%;
+            border-bottom: 3px solid var(--border-color);
+        }
+
+        /* --- VALUES (FONDASI) --- */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .value-card {
+            background: var(--card-bg);
+            border: 3px solid var(--border-color);
+            padding: 2rem;
+            box-shadow: 8px 8px 0px var(--accent-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+            will-change: transform; /* OPTIMASI: Persiapan GPU sebelum animasi */
+        }
+
+        .value-card h3 {
+            font-family: var(--font-accent);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        /* --- PORTFOLIO / SYLLABUS GRIDS --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .article-card {
+            border: 2px solid var(--border-color);
+            background: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .article-content {
+            padding: 2rem;
+        }
+
+        .article-tag {
+            font-family: var(--font-accent);
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: block;
+            border-bottom: 1px solid currentColor;
+            padding-bottom: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .article-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        /* Main Project Card Special Styling */
+        .project-card {
+            background-color: var(--accent-color) !important;
+            color: #ffffff !important;
+            border-color: var(--border-color);
+            border-style: dashed;
+            box-shadow: 8px 8px 0px var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+            will-change: transform;
+        }
+        
+        .project-card .article-tag, .project-card p {
+            color: #ffffff !important;
+        }
+
+        /* --- CONTACT --- */
+        .contact-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .contact-info h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-transform: uppercase;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            font-family: var(--font-accent);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* --- RESPONSIVE MOBILE UX --- */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1.2rem;
+                padding: 1.2rem 5%;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            /* OPTIMASI: Area sentuh yang lebih besar (min 44px) untuk jari agar tidak salah tekan */
+            nav a {
+                padding: 10px 12px; 
+            }
+
+            .controls {
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+                gap: 0.8rem;
+            }
+
+            .controls button, .blog-btn {
+                padding: 12px 16px; /* Target sentuh yang nyaman */
+                flex-grow: 1;
+                text-align: center;
+                font-size: 1rem;
+            }
+            
+            .hero {
+                padding: 4rem 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="anakganteng.webp" alt="Logo Jurnalistik SMAN 1 Meliau" loading="lazy" width="200" height="50">
+        </div>
+        <nav>
+            <a href="#intro" class="lang" data-id="Pengantar" data-en="Intro">Pengantar</a>
+            <a href="#program" class="lang" data-id="Program" data-en="Programs">Program</a>
+            <a href="#proyek" class="lang" data-id="Proyek" data-en="Projects">Proyek</a>
+            <a href="#contact" class="lang" data-id="Kontak" data-en="Contact">Kontak</a>
+        </nav>
+        <div class="controls">
+            <a href="https://marenpost.blogspot.com/" target="_blank" rel="noopener noreferrer" class="blog-btn lang" data-id="Baca Blog Marenpost" data-en="Read Marenpost Blog">Baca Blog Marenpost</a>
+            <button id="langToggle">EN</button>
+            <button id="themeToggle" aria-label="Toggle Theme">☼/☾</button>
+        </div>
+    </header>
+
+    <section id="intro" class="hero">
+        <h1 class="lang" data-id="Menulis dengan <span class='highlight'>Fakta</span>,<br>Bicara dengan <span class='highlight'>Etika</span>." data-en="Writing with <span class='highlight'>Facts</span>,<br>Speaking with <span class='highlight'>Ethics</span>.">
+            Menulis dengan <span class='highlight'>Fakta</span>,<br>Bicara dengan <span class='highlight'>Etika</span>.
+        </h1>
+        <p class="manifesto lang" data-id='"Diam dalam harmoni mereka. Terjebak dalam aturan mereka. Kita tidak, mereka iya. Bebas musuh kita, merekalah." — Ekstrakurikuler yang mengacu pada Penulisan dan Pemikiran.' data-en='"Silent in their harmony. Trapped in their rules. We are not, they are. Free is our enemy, it is them." — Extracurricular focused on Writing and Thinking.'>
+            "Diam dalam harmoni mereka. Terjebak dalam aturan mereka. Kita tidak, mereka iya. Bebas musuh kita, merekalah." — Ekstrakurikuler yang mengacu pada Penulisan dan Pemikiran.
+        </p>
+
+        <h2 class="section-title lang" style="margin-top: 3rem;" data-id="Tiga Fondasi" data-en="Three Foundations">Tiga Fondasi</h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <h3>Integrity</h3>
+                <p class="lang" data-id="Kesatuan utuh yang memancarkan kewibawaan dan kejujuran. Jurnalisme adalah komitmen pada kebenaran di tengah gempuran informasi." data-en="A complete unity that radiates authority and honesty. Journalism is a commitment to truth amidst the onslaught of information.">Kesatuan utuh yang memancarkan kewibawaan dan kejujuran. Jurnalisme adalah komitmen pada kebenaran di tengah gempuran informasi.</p>
+            </div>
+            <div class="value-card">
+                <h3>Bravery</h3>
+                <p class="lang" data-id="Pilihan dan kehendak untuk melawan derita, luka, bahaya, atau intimidasi. Garda terdepan literasi sekolah." data-en="The choice and will to fight suffering, wounds, danger, or intimidation. The vanguard of school literacy.">Pilihan dan kehendak untuk melawan derita, luka, bahaya, atau intimidasi. Garda terdepan literasi sekolah.</p>
+            </div>
+            <div class="value-card">
+                <h3>Creativity</h3>
+                <p class="lang" data-id="Pikir sendiri, lalu berimajinasi. Kebebasan berekspresi untuk mereka yang buta; beritahulah." data-en="Think for yourself, then imagine. Freedom of expression for those who are blind; tell them.">Pikir sendiri, lalu berimajinasi. Kebebasan berekspresi untuk mereka yang buta; beritahulah.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="program">
+        <h2 class="section-title lang" data-id="Program & Pelatihan" data-en="Programs & Training">Program & Pelatihan</h2>
+        <div class="grid-container">
+            <div class="article-card">
+                <div class="article-content">
+                    <span class="article-tag lang" data-id="Materi Dasar" data-en="Basic Skill">Materi Dasar</span>
+                    <h3 class="article-title lang" data-id="Teknik Wawancara & Penulisan Berita" data-en="Interview & News Writing Techniques">Teknik Wawancara & Penulisan Berita</h3>
+                    <p class="lang" data-id="Latihan praktis mewawancarai narasumber dan merangkai fakta menjadi berita yang akurat serta berimbang sesuai etika jurnalistik." data-en="Practical exercises in interviewing sources and weaving facts into accurate and balanced news adhering to journalistic ethics.">Latihan praktis mewawancarai narasumber dan merangkai fakta menjadi berita yang akurat serta berimbang sesuai etika jurnalistik.</p>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-content">
+                    <span class="article-tag lang" data-id="Dokumentasi" data-en="Documentation">Dokumentasi</span>
+                    <h3 class="article-title lang" data-id="Fotografi Jurnalistik & Reportase" data-en="Photojournalism & Reporting">Fotografi Jurnalistik & Reportase</h3>
+                    <p class="lang" data-id="Pengenalan teknik fotografi lapangan dan praktik liputan langsung untuk melengkapi narasi dengan bukti visual yang kuat." data-en="Introduction to field photography and live reporting to complement narratives with strong visual evidence.">Pengenalan teknik fotografi lapangan dan praktik liputan langsung untuk melengkapi narasi dengan bukti visual yang kuat.</p>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-content">
+                    <span class="article-tag lang" data-id="Analisis Mendalam" data-en="In-Depth Analysis">Analisis Mendalam</span>
+                    <h3 class="article-title lang" data-id="Jurnalistik Investigatif & Penulisan Feature" data-en="Investigative Journalism & Feature Writing">Jurnalistik Investigatif & Penulisan Feature</h3>
+                    <p class="lang" data-id="Diskusi studi kasus dan penulisan mendalam (feature) untuk menyajikan sudut pandang alternatif di lingkungan sekolah." data-en="Case study discussions and in-depth writing (features) to present alternative perspectives within the school environment.">Diskusi studi kasus dan penulisan mendalam (feature) untuk menyajikan sudut pandang alternatif di lingkungan sekolah.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="proyek">
+        <h2 class="section-title lang" data-id="Proyek Utama" data-en="Main Project">Proyek Utama</h2>
+        <div class="grid-container">
+            <div class="article-card project-card">
+                <div class="article-content">
+                    <span class="article-tag lang" data-id="Tugas Akhir Anggota" data-en="Members Final Task">Tugas Akhir Anggota</span>
+                    <h3 class="article-title lang" data-id="Proyek Akhir: Pembuatan Majalah Sekolah" data-en="Final Project: School Magazine Creation">Proyek Akhir: Pembuatan Majalah Sekolah</h3>
+                    <p class="lang" data-id="Kolaborasi puncak dalam bentuk kerja kelompok. Melibatkan proses penyuntingan, penyusunan tata letak (layouting), publikasi, hingga presentasi hasil karya jurnalistik terbaik selama satu periode kepengurusan." data-en="The pinnacle collaboration in a group work format. Involves editing, layouting, publishing, and presenting the best journalistic works of the period.">Kolaborasi puncak dalam bentuk kerja kelompok. Melibatkan proses penyuntingan, penyusunan tata letak (layouting), publikasi, hingga presentasi hasil karya jurnalistik terbaik selama satu periode kepengurusan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h2 class="lang" data-id="Mari<br>Berbicara<br>Fakta." data-en="Let's<br>Talk<br>Facts.">Mari<br>Berbicara<br>Fakta.</h2>
+            </div>
+            <div class="contact-info">
+                <p class="lang" data-id="Hubungi Kami" data-en="Reach Us Out">Hubungi Kami</p>
+                <p>Instagram: <a href="https://instagram.com/jurnalistik_smansa.meliau" target="_blank" rel="noopener noreferrer">@jurnalistik_smansa.meliau</a></p>
+                <br>
+                <p class="lang" data-id="Bebas, bukan berarti tanpa arah. Apapun yang terjadi, terjadilah." data-en="Free, doesn't mean directionless. Whatever happens, happens.">Bebas, bukan berarti tanpa arah. Apapun yang terjadi, terjadilah.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- THEME TOGGLE SCRIPT ---
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                htmlElement.setAttribute('data-theme', 'light');
+            } else {
+                htmlElement.setAttribute('data-theme', 'dark');
+            }
+        });
+
+        // --- LANGUAGE TOGGLE SCRIPT ---
+        const langToggleBtn = document.getElementById('langToggle');
+        let currentLang = 'id'; 
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'id' ? 'en' : 'id';
+            langToggleBtn.innerText = currentLang === 'id' ? 'EN' : 'ID';
+            
+            const translatableElements = document.querySelectorAll('.lang');
+            translatableElements.forEach(el => {
+                if (currentLang === 'en') {
+                    el.innerHTML = el.getAttribute('data-en');
+                } else {
+                    el.innerHTML = el.getAttribute('data-id');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
