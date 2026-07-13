@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Jurnalistik SMAN 1 Meliau</title>
+    <title>Jurnalistik SMAN 1 Meliau | Portfolio</title>
     
     <link rel="icon" type="image/webp" href="anakganteng.webp">
     
@@ -41,7 +41,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
             line-height: 1.6;
             
-            /* OPTIMASI: Mencegah layot bergeser ke samping (horizontal scroll) di mobile */
+            /* OPTIMASI: Mencegah layout bergeser ke samping (horizontal scroll) di mobile */
             overflow-x: hidden;
             width: 100%;
             max-width: 100vw;
@@ -58,7 +58,14 @@
             top: 0;
             background-color: var(--bg-color);
             z-index: 1000;
-            flex-wrap: wrap; /* Persiapan untuk seluler */
+            flex-wrap: wrap;
+        }
+
+        /* Penataan Logo dan Teks di Sampingnya */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .logo img {
@@ -66,13 +73,20 @@
             width: auto;
             vertical-align: middle;
             transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            /* OPTIMASI: Rendering dengan GPU untuk mencegah lag */
             transform: translateZ(0); 
+        }
+
+        .logo-text {
+            font-family: var(--font-accent);
+            font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
         }
 
         /* --- PENGATURAN DEFAULT TOMBOL MENU (DESKTOP) --- */
         .mobile-toggle {
-            display: none; /* Sembunyikan tombol secara default di laptop/desktop */
+            display: none;
         }
 
         nav {
@@ -123,8 +137,7 @@
             display: inline-block;
         }
 
-        /* OPTIMASI: Memisahkan efek hover hanya untuk perangkat yang memiliki Mouse/Trackpad.
-           Mencegah bug "sticky hover" pada layar sentuh. */
+        /* OPTIMASI HOVER MOUSE */
         @media (hover: hover) and (pointer: fine) {
             .logo img:hover {
                 transform: scale(1.05) translateZ(0);
@@ -171,7 +184,7 @@
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem); /* OPTIMASI: Tipografi responsif otomatis */
+            font-size: clamp(2.5rem, 5vw, 4rem);
             font-weight: 900;
             line-height: 1.1;
             text-transform: uppercase;
@@ -223,7 +236,7 @@
             padding: 2rem;
             box-shadow: 8px 8px 0px var(--accent-color);
             transition: transform 0.2s, box-shadow 0.2s;
-            will-change: transform; /* OPTIMASI: Persiapan GPU sebelum animasi */
+            will-change: transform;
         }
 
         .value-card h3 {
@@ -325,10 +338,9 @@
             }
 
             .logo {
-                flex: 1; /* Biarkan logo mengambil ruang kosong agar tombol menu terdorong ke kanan */
+                flex: 1;
             }
 
-            /* Tombol Toggle Tampil di Seluler */
             .mobile-toggle {
                 display: flex;
                 align-items: center;
@@ -342,7 +354,6 @@
                 transition: transform 0.2s ease, background-color 0.2s;
             }
 
-            /* Ikon Chevron Mengarah ke Bawah */
             .chevron {
                 display: block;
                 width: 12px;
@@ -353,7 +364,6 @@
                 transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             }
 
-            /* Menu Navigasi Disembunyikan (Ditarik ke Atas) */
             #navLinks {
                 position: absolute;
                 top: 100%;
@@ -377,23 +387,19 @@
                 text-align: center;
             }
 
-            /* Kondisi Aktif Saat Menu Terbuka */
             #navLinks.active {
                 max-height: 400px; 
                 opacity: 1;
                 border-bottom: 3px solid var(--border-color);
             }
 
-            /* Chevron Memutar ke Atas Saat Aktif */
             .mobile-toggle.active .chevron {
                 transform: translateY(3px) rotate(225deg);
             }
 
-            /* Umpan balik taktil saat tombol menu ditekan */
             .mobile-toggle:active { transform: translateY(2px); }
             .mobile-toggle.active:active { transform: translateY(-2px); }
 
-            /* Penataan tombol controls (Blog, Bahasa, Tema) di bawah logo & menu */
             .controls {
                 width: 100%;
                 margin-top: 1rem;
@@ -403,7 +409,7 @@
             }
 
             .controls button, .blog-btn {
-                padding: 12px 16px; /* Area sentuh luas */
+                padding: 12px 16px;
                 flex-grow: 1;
                 text-align: center;
                 font-size: 1rem;
@@ -419,7 +425,8 @@
 
     <header>
         <div class="logo">
-            <img src="anakganteng.webp" alt="Logo Jurnalistik SMAN 1 Meliau" loading="lazy" width="200" height="50">
+            <img src="logo.png" alt="Logo Jurnalistik SMAN 1 Meliau" loading="lazy" width="50" height="50">
+            <span class="logo-text lang" data-id="Jurnalistik SMA Negeri 1 Meliau" data-en="SMAN 1 Meliau Journalism">Jurnalistik SMA Negeri 1 Meliau</span>
         </div>
 
         <button class="mobile-toggle" id="mobileToggle" aria-expanded="false" aria-label="Buka Menu">
@@ -556,16 +563,13 @@
         const navLinks = document.getElementById('navLinks');
 
         mobileToggle.addEventListener('click', () => {
-            // Menambah/menghapus kelas 'active' pada tombol dan menu
             mobileToggle.classList.toggle('active');
             navLinks.classList.toggle('active');
             
-            // Memperbarui atribut aksesibilitas
             const isOpen = navLinks.classList.contains('active');
             mobileToggle.setAttribute('aria-expanded', isOpen);
         });
 
-        // Menutup menu secara otomatis saat salah satu link navigasi ditekan
         const menuItems = navLinks.querySelectorAll('a');
         menuItems.forEach(item => {
             item.addEventListener('click', () => {
