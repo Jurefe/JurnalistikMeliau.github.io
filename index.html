@@ -40,8 +40,6 @@
             font-family: var(--font-main);
             transition: background-color 0.3s ease, color 0.3s ease;
             line-height: 1.6;
-            
-            /* OPTIMASI: Mencegah layout bergeser ke samping (horizontal scroll) di mobile */
             overflow-x: hidden;
             width: 100%;
             max-width: 100vw;
@@ -61,7 +59,6 @@
             flex-wrap: wrap;
         }
 
-        /* Penataan Logo dan Teks di Sampingnya */
         .logo {
             display: flex;
             align-items: center;
@@ -78,13 +75,12 @@
 
         .logo-text {
             font-family: var(--font-accent);
-            font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+            font-size: clamp(0.8rem, 1.2vw, 1.1rem);
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: -0.5px;
         }
 
-        /* --- PENGATURAN DEFAULT TOMBOL MENU (DESKTOP) --- */
         .mobile-toggle {
             display: none;
         }
@@ -122,7 +118,6 @@
             transition: all 0.2s ease;
         }
 
-        /* Custom Blog Button */
         .blog-btn {
             background-color: var(--accent-color);
             color: #ffffff !important;
@@ -137,287 +132,134 @@
             display: inline-block;
         }
 
-        /* OPTIMASI HOVER MOUSE */
         @media (hover: hover) and (pointer: fine) {
-            .logo img:hover {
-                transform: scale(1.05) translateZ(0);
-            }
-            nav a:hover {
-                color: var(--accent-color);
-            }
-            .controls button:hover {
-                background: var(--text-color);
-                color: var(--bg-color);
-            }
+            nav a:hover { color: var(--accent-color); }
+            .controls button:hover { background: var(--text-color); color: var(--bg-color); }
             .blog-btn:hover {
                 background-color: var(--text-color);
                 color: var(--bg-color) !important;
                 box-shadow: 4px 4px 0px var(--accent-color);
                 transform: translate(-2px, -2px);
             }
-            .value-card:hover, .project-card:hover {
-                transform: translate(-4px, -4px);
-            }
-            .value-card:hover {
-                box-shadow: 12px 12px 0px var(--accent-color);
-            }
-            .project-card:hover {
-                box-shadow: 12px 12px 0px var(--border-color);
-            }
-            .article-card:hover {
-                background: var(--text-color);
-                color: var(--bg-color);
-            }
-            .article-card:hover .article-tag, .article-card:hover p {
-                color: var(--bg-color);
-            }
-            .project-card:hover .article-tag, .project-card:hover p {
-                color: #ffffff !important;
-            }
+            .value-card:hover, .project-card:hover { transform: translate(-4px, -4px); }
+            .value-card:hover { box-shadow: 12px 12px 0px var(--accent-color); }
+            .project-card:hover { box-shadow: 12px 12px 0px var(--border-color); }
         }
 
-        /* --- HERO SECTION --- */
-        .hero {
-            padding: 6rem 5%;
-            border-bottom: 3px solid var(--border-color);
+        /* --- SECTIONS --- */
+        .hero { padding: 6rem 5%; border-bottom: 3px solid var(--border-color); position: relative; }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; text-transform: uppercase; max-width: 900px; margin-bottom: 1.5rem; }
+        .hero .highlight { background-color: var(--text-color); color: var(--bg-color); padding: 0 10px; }
+        .hero p.manifesto { font-family: var(--font-accent); font-size: 1.2rem; max-width: 600px; border-left: 4px solid var(--accent-color); padding-left: 1rem; margin-bottom: 2rem; }
+
+        .section-title { font-family: var(--font-accent); font-size: clamp(1.8rem, 4vw, 2.5rem); text-transform: uppercase; margin-bottom: 2rem; border-bottom: 2px dashed var(--border-color); display: inline-block; padding-bottom: 0.5rem; }
+        section { padding: 4rem 5%; border-bottom: 3px solid var(--border-color); }
+
+        .values-grid, .grid-container { display: grid; gap: 2rem; }
+        .values-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .grid-container { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+        .value-card, .article-card { background: var(--card-bg); border: 3px solid var(--border-color); padding: 2rem; transition: transform 0.2s, box-shadow 0.2s; }
+        .value-card { box-shadow: 8px 8px 0px var(--accent-color); }
+        .value-card h3 { font-family: var(--font-accent); font-size: 1.8rem; margin-bottom: 1rem; text-transform: uppercase; }
+
+        .article-tag { font-family: var(--font-accent); color: var(--accent-color); font-weight: bold; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 1rem; display: block; border-bottom: 1px solid currentColor; padding-bottom: 0.5rem; }
+        .article-title { font-size: 1.8rem; font-weight: bold; margin-bottom: 1rem; line-height: 1.2; }
+
+        .project-card { 
+            background-color: var(--accent-color) !important; 
+            color: #ffffff !important; 
+            border-style: dashed; 
+            box-shadow: 8px 8px 0px var(--border-color); 
+            cursor: pointer; /* Indikasi bisa diklik */
+        }
+        .project-card .article-tag, .project-card p { color: #ffffff !important; }
+
+        /* --- MODAL / POP-UP STYLE --- */
+        .modal-overlay {
+            display: none; /* Sembunyi secara default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 4px solid var(--border-color);
+            padding: 10px;
+            width: 90%;
+            max-width: 450px; /* Tidak terlalu menutupi layar */
             position: relative;
+            box-shadow: 15px 15px 0px var(--accent-color);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 900;
-            line-height: 1.1;
-            text-transform: uppercase;
-            max-width: 900px;
-            margin-bottom: 1.5rem;
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        .hero .highlight {
-            background-color: var(--text-color);
-            color: var(--bg-color);
-            padding: 0 10px;
-        }
-
-        .hero p.manifesto {
-            font-family: var(--font-accent);
-            font-size: 1.2rem;
-            max-width: 600px;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        /* --- SECTION TITLES --- */
-        .section-title {
-            font-family: var(--font-accent);
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            text-transform: uppercase;
-            margin-bottom: 2rem;
-            border-bottom: 2px dashed var(--border-color);
-            display: inline-block;
-            padding-bottom: 0.5rem;
-        }
-
-        section {
-            padding: 4rem 5%;
-            border-bottom: 3px solid var(--border-color);
-        }
-
-        /* --- VALUES (FONDASI) --- */
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .value-card {
-            background: var(--card-bg);
-            border: 3px solid var(--border-color);
-            padding: 2rem;
-            box-shadow: 8px 8px 0px var(--accent-color);
-            transition: transform 0.2s, box-shadow 0.2s;
-            will-change: transform;
-        }
-
-        .value-card h3 {
-            font-family: var(--font-accent);
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-        }
-
-        /* --- PORTFOLIO / SYLLABUS GRIDS --- */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .article-card {
-            border: 2px solid var(--border-color);
-            background: var(--card-bg);
-            display: flex;
-            flex-direction: column;
-            transition: background-color 0.2s, color 0.2s;
-        }
-
-        .article-content {
-            padding: 2rem;
-        }
-
-        .article-tag {
-            font-family: var(--font-accent);
-            color: var(--accent-color);
-            font-weight: bold;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
+        .modal-content img {
+            width: 100%;
+            height: auto;
             display: block;
-            border-bottom: 1px solid currentColor;
-            padding-bottom: 0.5rem;
-            transition: color 0.2s;
+            border: 2px solid var(--border-color);
         }
 
-        .article-title {
-            font-size: 1.8rem;
+        .close-modal {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: 3px solid var(--border-color);
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
             font-weight: bold;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        /* Main Project Card Special Styling */
-        .project-card {
-            background-color: var(--accent-color) !important;
-            color: #ffffff !important;
-            border-color: var(--border-color);
-            border-style: dashed;
-            box-shadow: 8px 8px 0px var(--border-color);
-            transition: transform 0.2s, box-shadow 0.2s;
-            will-change: transform;
-        }
-        
-        .project-card .article-tag, .project-card p {
-            color: #ffffff !important;
-        }
-
-        /* --- CONTACT --- */
-        .contact-wrapper {
+            cursor: pointer;
             display: flex;
-            flex-wrap: wrap;
-            gap: 4rem;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 4px 4px 0px var(--border-color);
+            transition: all 0.1s;
         }
 
-        .contact-info {
-            flex: 1;
-            min-width: 280px;
+        .close-modal:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px var(--border-color);
         }
 
-        .contact-info h2 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            text-transform: uppercase;
-            line-height: 1;
-            margin-bottom: 1.5rem;
-        }
+        /* --- FOOTER & CONTACT --- */
+        .contact-wrapper { display: flex; flex-wrap: wrap; gap: 4rem; }
+        .contact-info { flex: 1; min-width: 280px; }
+        .contact-info h2 { font-size: clamp(2rem, 5vw, 3rem); text-transform: uppercase; line-height: 1; margin-bottom: 1.5rem; }
+        .contact-info p { font-family: var(--font-accent); font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .contact-info a { color: var(--accent-color); text-decoration: none; font-weight: bold; }
 
-        .contact-info p {
-            font-family: var(--font-accent);
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-info a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* --- RESPONSIVE MOBILE UX & TOGGLE MENU --- */
+        /* --- MOBILE NAV --- */
         @media (max-width: 768px) {
-            header {
-                padding: 1rem 5%;
+            .mobile-toggle { 
+                display: flex; align-items: center; justify-content: center; 
+                background-color: var(--accent-color); border: 2px solid var(--border-color);
+                width: 44px; height: 44px; z-index: 1001;
             }
-
-            .logo {
-                flex: 1;
+            .chevron { display: block; width: 10px; height: 10px; border-right: 3px solid #fff; border-bottom: 3px solid #fff; transform: translateY(-2px) rotate(45deg); transition: 0.3s; }
+            #navLinks { 
+                position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-color);
+                flex-direction: column; max-height: 0; opacity: 0; overflow: hidden; transition: 0.4s;
             }
-
-            .mobile-toggle {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: var(--accent-color);
-                border: 2px solid var(--border-color);
-                width: 44px;
-                height: 44px;
-                cursor: pointer;
-                z-index: 1001;
-                transition: transform 0.2s ease, background-color 0.2s;
-            }
-
-            .chevron {
-                display: block;
-                width: 12px;
-                height: 12px;
-                border-right: 3px solid #ffffff;
-                border-bottom: 3px solid #ffffff;
-                transform: translateY(-3px) rotate(45deg);
-                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-
-            #navLinks {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--bg-color);
-                flex-direction: column;
-                gap: 0;
-                overflow: hidden;
-                max-height: 0; 
-                opacity: 0;
-                border-bottom: 0px solid var(--border-color);
-                transition: max-height 0.4s ease-out, opacity 0.3s ease, border-bottom 0.3s ease;
-                z-index: 1000;
-            }
-
-            #navLinks a {
-                padding: 1.2rem 5%;
-                border-bottom: 1px dashed var(--border-color);
-                width: 100%;
-                text-align: center;
-            }
-
-            #navLinks.active {
-                max-height: 400px; 
-                opacity: 1;
-                border-bottom: 3px solid var(--border-color);
-            }
-
-            .mobile-toggle.active .chevron {
-                transform: translateY(3px) rotate(225deg);
-            }
-
-            .mobile-toggle:active { transform: translateY(2px); }
-            .mobile-toggle.active:active { transform: translateY(-2px); }
-
-            .controls {
-                width: 100%;
-                margin-top: 1rem;
-                justify-content: center;
-                flex-wrap: wrap;
-                order: 3;
-            }
-
-            .controls button, .blog-btn {
-                padding: 12px 16px;
-                flex-grow: 1;
-                text-align: center;
-                font-size: 1rem;
-            }
-            
-            .hero {
-                padding: 4rem 5%;
-            }
+            #navLinks.active { max-height: 400px; opacity: 1; border-bottom: 3px solid var(--border-color); }
+            .mobile-toggle.active .chevron { transform: translateY(2px) rotate(225deg); }
+            .controls { width: 100%; margin-top: 1rem; justify-content: center; }
+            .close-modal { top: -10px; right: -10px; }
         }
     </style>
 </head>
@@ -429,7 +271,7 @@
             <span class="logo-text lang" data-id="Jurnalistik SMA Negeri 1 Meliau" data-en="SMAN 1 Meliau Journalism">Jurnalistik SMA Negeri 1 Meliau</span>
         </div>
 
-        <button class="mobile-toggle" id="mobileToggle" aria-expanded="false" aria-label="Buka Menu">
+        <button class="mobile-toggle" id="mobileToggle">
             <span class="chevron"></span>
         </button>
 
@@ -443,9 +285,20 @@
         <div class="controls">
             <a href="https://marenpost.blogspot.com/" target="_blank" rel="noopener noreferrer" class="blog-btn lang" data-id="Baca Blog Marenpost" data-en="Read Marenpost Blog">Baca Blog Marenpost</a>
             <button id="langToggle">EN</button>
-            <button id="themeToggle" aria-label="Toggle Theme">☼/☾</button>
+            <button id="themeToggle">☼/☾</button>
         </div>
     </header>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <img id="targetGif" 
+                 src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueXF4Z3Rsc3Z4ZzR6Z3Rsc3Z4ZzR6Z3Rsc3Z4ZzR6Z3Rsc3Z4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKVUn7iM8FMEU24/giphy.gif" 
+                 data-id-src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueXF4Z3Rsc3Z4ZzR6Z3Rsc3Z4ZzR6Z3Rsc3Z4ZzR6Z3Rsc3Z4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKVUn7iM8FMEU24/giphy.gif"
+                 data-en-src="fish.gif"
+                 alt="Tugas Akhir Anggota">
+        </div>
+    </div>
 
     <section id="intro" class="hero">
         <h1 class="lang" data-id="Menulis dengan <span class='highlight'>Fakta</span>,<br>Bicara dengan <span class='highlight'>Etika</span>." data-en="Writing with <span class='highlight'>Facts</span>,<br>Speaking with <span class='highlight'>Ethics</span>.">
@@ -455,19 +308,19 @@
             "Diam dalam harmoni mereka. Terjebak dalam aturan mereka. Kita tidak, mereka iya. Bebas musuh kita, merekalah." — Ekstrakurikuler yang mengacu pada Penulisan dan Pemikiran.
         </p>
 
-        <h2 class="section-title lang" style="margin-top: 3rem;" data-id="Tiga Fondasi" data-en="Three Foundations">Tiga Fondasi</h2>
+        <h2 class="section-title lang" data-id="Tiga Fondasi" data-en="Three Foundations">Tiga Fondasi</h2>
         <div class="values-grid">
             <div class="value-card">
                 <h3>Integrity</h3>
-                <p class="lang" data-id="Kesatuan utuh yang memancarkan kewibawaan dan kejujuran. Jurnalisme adalah komitmen pada kebenaran di tengah gempuran informasi." data-en="A complete unity that radiates authority and honesty. Journalism is a commitment to truth amidst the onslaught of information.">Kesatuan utuh yang memancarkan kewibawaan dan kejujuran. Jurnalisme adalah komitmen pada kebenaran di tengah gempuran informasi.</p>
+                <p class="lang" data-id="Kesatuan utuh yang memancarkan kewibawaan dan kejujuran." data-en="A complete unity that radiates authority and honesty.">Kesatuan utuh yang memancarkan kewibawaan dan kejujuran.</p>
             </div>
             <div class="value-card">
                 <h3>Bravery</h3>
-                <p class="lang" data-id="Pilihan dan kehendak untuk melawan derita, luka, bahaya, atau intimidasi. Garda terdepan literasi sekolah." data-en="The choice and will to fight suffering, wounds, danger, or intimidation. The vanguard of school literacy.">Pilihan dan kehendak untuk melawan derita, luka, bahaya, atau intimidasi. Garda terdepan literasi sekolah.</p>
+                <p class="lang" data-id="Pilihan dan kehendak untuk melawan derita, luka, atau intimidasi." data-en="The choice and will to fight suffering, wounds, or intimidation.">Pilihan dan kehendak untuk melawan derita, luka, atau intimidasi.</p>
             </div>
             <div class="value-card">
                 <h3>Creativity</h3>
-                <p class="lang" data-id="Pikir sendiri, lalu berimajinasi. Kebebasan berekspresi untuk mereka yang buta; beritahulah." data-en="Think for yourself, then imagine. Freedom of expression for those who are blind; tell them.">Pikir sendiri, lalu berimajinasi. Kebebasan berekspresi untuk mereka yang buta; beritahulah.</p>
+                <p class="lang" data-id="Pikir sendiri, lalu berimajinasi. Kebebasan berekspresi." data-en="Think for yourself, then imagine. Freedom of expression.">Pikir sendiri, lalu berimajinasi. Kebebasan berekspresi.</p>
             </div>
         </div>
     </section>
@@ -476,25 +329,14 @@
         <h2 class="section-title lang" data-id="Program & Pelatihan" data-en="Programs & Training">Program & Pelatihan</h2>
         <div class="grid-container">
             <div class="article-card">
-                <div class="article-content">
-                    <span class="article-tag lang" data-id="Materi Dasar" data-en="Basic Skill">Materi Dasar</span>
-                    <h3 class="article-title lang" data-id="Teknik Wawancara & Penulisan Berita" data-en="Interview & News Writing Techniques">Teknik Wawancara & Penulisan Berita</h3>
-                    <p class="lang" data-id="Latihan praktis mewawancarai narasumber dan merangkai fakta menjadi berita yang akurat serta berimbang sesuai etika jurnalistik." data-en="Practical exercises in interviewing sources and weaving facts into accurate and balanced news adhering to journalistic ethics.">Latihan praktis mewawancarai narasumber dan merangkai fakta menjadi berita yang akurat serta berimbang sesuai etika jurnalistik.</p>
-                </div>
+                <span class="article-tag lang" data-id="Dasar" data-en="Basic">Dasar</span>
+                <h3 class="article-title lang" data-id="Teknik Wawancara" data-en="Interview Skills">Teknik Wawancara</h3>
+                <p class="lang" data-id="Latihan praktis mencari fakta." data-en="Practical exercises in seeking facts.">Latihan praktis mencari fakta.</p>
             </div>
             <div class="article-card">
-                <div class="article-content">
-                    <span class="article-tag lang" data-id="Dokumentasi" data-en="Documentation">Dokumentasi</span>
-                    <h3 class="article-title lang" data-id="Fotografi Jurnalistik & Reportase" data-en="Photojournalism & Reporting">Fotografi Jurnalistik & Reportase</h3>
-                    <p class="lang" data-id="Pengenalan teknik fotografi lapangan dan praktik liputan langsung untuk melengkapi narasi dengan bukti visual yang kuat." data-en="Introduction to field photography and live reporting to complement narratives with strong visual evidence.">Pengenalan teknik fotografi lapangan dan praktik liputan langsung untuk melengkapi narasi dengan bukti visual yang kuat.</p>
-                </div>
-            </div>
-            <div class="article-card">
-                <div class="article-content">
-                    <span class="article-tag lang" data-id="Analisis Mendalam" data-en="In-Depth Analysis">Analisis Mendalam</span>
-                    <h3 class="article-title lang" data-id="Jurnalistik Investigatif & Penulisan Feature" data-en="Investigative Journalism & Feature Writing">Jurnalistik Investigatif & Penulisan Feature</h3>
-                    <p class="lang" data-id="Diskusi studi kasus dan penulisan mendalam (feature) untuk menyajikan sudut pandang alternatif di lingkungan sekolah." data-en="Case study discussions and in-depth writing (features) to present alternative perspectives within the school environment.">Diskusi studi kasus dan penulisan mendalam (feature) untuk menyajikan sudut pandang alternatif di lingkungan sekolah.</p>
-                </div>
+                <span class="article-tag lang" data-id="Visual" data-en="Visual">Visual</span>
+                <h3 class="article-title lang" data-id="Fotografi Jurnalistik" data-en="Photojournalism">Fotografi Jurnalistik</h3>
+                <p class="lang" data-id="Lensa lapangan dan reportase." data-en="Field lens and reporting.">Lensa lapangan dan reportase.</p>
             </div>
         </div>
     </section>
@@ -502,10 +344,10 @@
     <section id="proyek">
         <h2 class="section-title lang" data-id="Proyek Utama" data-en="Main Project">Proyek Utama</h2>
         <div class="grid-container">
-            <div class="article-card project-card">
+            <div class="article-card project-card" id="openModal">
                 <div class="article-content">
                     <span class="article-tag lang" data-id="Tugas Akhir Anggota" data-en="Members Final Task">Tugas Akhir Anggota</span>
-                    <h3 class="article-title lang" data-id="Tugas Akhir" data-en="Final Quest">Tugas Akhir</h3>
+                    <h3 class="article-title lang" data-id="Tugas Terakhir" data-en="Final Task">Tugas Terakhir</h3>
                     <p class="lang" data-id="Jadi diri sendiri. Dan tertawa." data-en="Just be yourself. And laugh.">Jadi diri sendiri. Dan tertawa.</p>
                 </div>
             </div>
@@ -515,70 +357,72 @@
     <section id="contact">
         <div class="contact-wrapper">
             <div class="contact-info">
-                <h2 class="lang" data-id="Mari<br>Berbicara<br>Fakta." data-en="Let's<br>Talk<br>Facts.">Mari<br>Berbicara<br>Fakta.</h2>
-            </div>
-            <div class="contact-info">
-                <p class="lang" data-id="Hubungi Kami" data-en="Reach Us Out">Hubungi Kami</p>
-                <p>Instagram: <a href="https://instagram.com/jurnalistik_smansa.meliau" target="_blank" rel="noopener noreferrer">@jurnalistik_smansa.meliau</a></p>
-                <br>
-                <p class="lang" data-id="Bebas, bukan berarti tanpa arah. Apapun yang terjadi, terjadilah." data-en="Free, doesn't mean directionless. Whatever happens, happens.">Bebas, bukan berarti tanpa arah. Apapun yang terjadi, terjadilah.</p>
+                <h2 class="lang" data-id="Mari Berbicara Fakta." data-en="Let's Talk Facts.">Mari Berbicara Fakta.</h2>
+                <p>form: <a href="https://forms.gle/A6syW9WB6CD34mQN6" target="_blank">https://forms.gle/A6syW9WB6CD34mQN6</a></p>
+                <p>Instagram: <a href="https://instagram.com/jurnalistik_smansa.meliau" target="_blank">@jurnalistik_smansa.meliau</a></p>
             </div>
         </div>
     </section>
 
     <script>
-        // --- THEME TOGGLE SCRIPT ---
-        const themeToggleBtn = document.getElementById('themeToggle');
-        const htmlElement = document.documentElement;
+        // --- THEME TOGGLE ---
+        const themeBtn = document.getElementById('themeToggle');
+        themeBtn.addEventListener('click', () => {
+            const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        });
 
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                htmlElement.setAttribute('data-theme', 'light');
+        // --- LANGUAGE TOGGLE & GIF SWITCHER ---
+        const langBtn = document.getElementById('langToggle');
+        const gifImage = document.getElementById('targetGif'); // Mengambil elemen gambar GIF
+        let currentLang = 'id';
+        
+        langBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'id' ? 'en' : 'id';
+            langBtn.innerText = currentLang === 'id' ? 'EN' : 'ID';
+            
+            // Mengubah teks berdasarkan bahasa
+            document.querySelectorAll('.lang').forEach(el => {
+                el.innerHTML = el.getAttribute(`data-${currentLang}`);
+            });
+            
+            // Mengubah GIF berdasarkan bahasa
+            if (currentLang === 'id') {
+                gifImage.src = gifImage.getAttribute('data-id-src');
             } else {
-                htmlElement.setAttribute('data-theme', 'dark');
+                gifImage.src = gifImage.getAttribute('data-en-src');
             }
         });
 
-        // --- LANGUAGE TOGGLE SCRIPT ---
-        const langToggleBtn = document.getElementById('langToggle');
-        let currentLang = 'id'; 
-
-        langToggleBtn.addEventListener('click', () => {
-            currentLang = currentLang === 'id' ? 'en' : 'id';
-            langToggleBtn.innerText = currentLang === 'id' ? 'EN' : 'ID';
-            
-            const translatableElements = document.querySelectorAll('.lang');
-            translatableElements.forEach(el => {
-                if (currentLang === 'en') {
-                    el.innerHTML = el.getAttribute('data-en');
-                } else {
-                    el.innerHTML = el.getAttribute('data-id');
-                }
-            });
-        });
-
-        // --- MOBILE MENU TOGGLE SCRIPT ---
+        // --- MOBILE MENU ---
         const mobileToggle = document.getElementById('mobileToggle');
         const navLinks = document.getElementById('navLinks');
-
         mobileToggle.addEventListener('click', () => {
             mobileToggle.classList.toggle('active');
             navLinks.classList.toggle('active');
-            
-            const isOpen = navLinks.classList.contains('active');
-            mobileToggle.setAttribute('aria-expanded', isOpen);
         });
 
-        const menuItems = navLinks.querySelectorAll('a');
-        menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    mobileToggle.classList.remove('active');
-                    navLinks.classList.remove('active');
-                    mobileToggle.setAttribute('aria-expanded', 'false');
-                }
-            });
+        // --- MODAL POP-UP LOGIC ---
+        const modal = document.getElementById('modalOverlay');
+        const openBtn = document.getElementById('openModal');
+        const closeBtn = document.getElementById('closeModal');
+
+        openBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Kunci scroll saat pop-up buka
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Aktifkan scroll lagi
+        });
+
+        // Tutup modal jika user klik area luar kotak
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
         });
     </script>
 </body>
